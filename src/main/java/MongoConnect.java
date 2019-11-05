@@ -1,6 +1,4 @@
-import com.mongodb.ErrorCategory;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -57,87 +55,73 @@ public class MongoConnect
     // region update
     public void updateName(int id, String name)
     {
-        Document set = new Document("$set", new Document("name", name));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("name", name)));
     }
 
     public void updateHostId(int id, int hostId)
     {
-        Document set = new Document("$set", new Document("host_id", hostId));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("host_id", hostId)));
     }
 
     public void updateHostName(int id, String hostName)
     {
-        Document set = new Document("$set", new Document("host_name", hostName));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("host_name", hostName)));
     }
 
     public void updateNeighbourhoodGroup(int id, String neighbourhoodGroup)
     {
-        Document set = new Document("$set", new Document("neighbourhood_group", neighbourhoodGroup));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("neighbourhood_group", neighbourhoodGroup)));
     }
 
     public void updateNeighbourhood(int id, String neighbourhood)
     {
-        Document set = new Document("$set", new Document("neighbourhood", neighbourhood));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("neighbourhood", neighbourhood)));
     }
 
     public void updateLatitude(int id, float latitude)
     {
-        Document set = new Document("$set", new Document("latitude", latitude));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("latitude", latitude)));
     }
 
     public void updateLongtitude(int id, float longtitude)
     {
-        Document set = new Document("$set", new Document("longtitude", longtitude));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("longtitude", longtitude)));
     }
 
     public void updateRoomType(int id, String roomType)
     {
-        Document set = new Document("$set", new Document("room_type", roomType));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("room_type", roomType)));
     }
 
     public void updatePrice(int id, float price)
     {
-        Document set = new Document("$set", new Document("price", price));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("price", price)));
     }
 
     public void updateMinimumNights(int id, int minimumNights)
     {
-        Document set = new Document("$set", new Document("minimum_nights", minimumNights));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("minimum_nights", minimumNights)));
     }
 
     public void updateLastReview(int id, int year, int month, int day)
     {
         String date = year + "-" + month + "-" + day;
-        Document set = new Document("$set", new Document("last_review", date));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("last_review", date)));
     }
 
     public void updateReviewsPerMonth(int id, int reviewsPerMonth)
     {
-        Document set = new Document("$set", new Document("reviews_per_month", reviewsPerMonth));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("reviews_per_month", reviewsPerMonth)));
     }
 
     public void updateCalculatedHostListingsCount(int id, int calculatedHostListingsCount)
     {
-        Document set = new Document("$set", new Document("calculated_host_listings_count", calculatedHostListingsCount));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("calculated_host_listings_count", calculatedHostListingsCount)));
     }
 
     public void updateAvailability365(int id, int availability365)
     {
-        Document set = new Document("$set", new Document("availability_365", availability365));
-        collection.updateOne(new Document("_id", read(id).get("_id")), set);
+        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("availability_365", availability365)));
     }
     //endregion
 

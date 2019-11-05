@@ -11,7 +11,7 @@ public class Main
     {
         MongoConnect mongo = new MongoConnect("nbd", "airbnb");
         System.out.println(mongo.read(3647));
-        mongo.create(123);
-//        mongo.delete(123);
+//        mongo.create(123);
+        mongo.updateName(123, "test");
     }
 }
