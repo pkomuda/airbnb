@@ -13,12 +13,14 @@ import java.util.List;
 public class MongoConnect
 {
     private MongoCollection<Document> collection;
+    private JsonWriterSettings writerSettings;
 
     public MongoConnect(String databaseName, String collectionName)
     {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase(databaseName);
         collection = database.getCollection(collectionName);
+        writerSettings = new JsonWriterSettings(JsonMode.SHELL, true);
     }
 
     public MongoCollection<Document> getCollection()
@@ -43,7 +45,7 @@ public class MongoConnect
 
     public Document readDocument(int id)
     {
-        Document document = collection.find(Filters.eq("id", id)).first();
+        Document document = read(id);
         if (document != null)
             return document;
         else
@@ -52,16 +54,27 @@ public class MongoConnect
 
     public String readJson(int id)
     {
-        return readDocument(id).toJson(new JsonWriterSettings(JsonMode.SHELL, true));
+        return readDocument(id).toJson(writerSettings);
     }
 
-    public List<Document> readAll()
+    public List<Document> readAllDocuments()
     {
         List<Document> documents = new ArrayList<>();
         try (MongoCursor cursor = collection.find().iterator())
         {
             while (cursor.hasNext())
                 documents.add((Document) cursor.next());
+        }
+        return documents;
+    }
+
+    public List<String> readAllJsons()
+    {
+        List<String> documents = new ArrayList<>();
+        try (MongoCursor cursor = collection.find().iterator())
+        {
+            while (cursor.hasNext())
+                documents.add(((Document) cursor.next()).toJson(writerSettings));
         }
         return documents;
     }
