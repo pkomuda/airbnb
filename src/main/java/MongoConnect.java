@@ -32,15 +32,10 @@ public class MongoConnect
         Document document = new Document();
         document.append("_id", new ObjectId())
                 .append("id", id);
-        try
-        {
+        if (read(id) == null)
             collection.insertOne(document);
-        }
-        catch(MongoWriteException e)
-        {
-            if (e.getError().getCategory().equals(ErrorCategory.DUPLICATE_KEY))
-                System.out.println("Document with that id already exists");
-        }
+        else
+            throw new IllegalArgumentException("Document with id: " + id + " already exists.");
     }
 
     public Document read(int id)
