@@ -1,21 +1,20 @@
-// https://mongodb.github.io/mongo-java-driver/3.4/driver/getting-started/quick-start/
-// https://www.kenwalger.com/blog/nosql/mongodb-and-java/
-
-import org.bson.Document;
-
-import java.util.List;
-
 public class Main
 {
     public static void main(String[] args)
     {
         MongoConnect mongo = new MongoConnect("nbd", "airbnb");
-        System.out.println(mongo.read(3647));
-//        mongo.create(123);
-        System.out.println(mongo.read(123));
-
-        mongo.updateName(1234, "test");
-        System.out.println(mongo.read(123));
-
+        int id = 123;
+        try
+        {
+            mongo.create(id);
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("Document with id: " + id + " was not created, because it already exists");
+        }
+        System.out.println(mongo.readJson(id));
+        mongo.updateName(id, "test");
+        System.out.println(mongo.readJson(id));
+        System.out.println(mongo.delete(123));
     }
 }
