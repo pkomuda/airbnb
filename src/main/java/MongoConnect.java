@@ -6,6 +6,7 @@ import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,73 +56,116 @@ public class MongoConnect
     // region update
     public void updateName(int id, String name)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("name", name)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("name", name)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateHostId(int id, int hostId)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("host_id", hostId)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("host_id", hostId)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateHostName(int id, String hostName)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("host_name", hostName)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("host_name", hostName)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateNeighbourhoodGroup(int id, String neighbourhoodGroup)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("neighbourhood_group", neighbourhoodGroup)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("neighbourhood_group", neighbourhoodGroup)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
+
     }
 
     public void updateNeighbourhood(int id, String neighbourhood)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("neighbourhood", neighbourhood)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("neighbourhood", neighbourhood)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateLatitude(int id, float latitude)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("latitude", latitude)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("latitude", latitude)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateLongtitude(int id, float longtitude)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("longtitude", longtitude)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("longtitude", longtitude)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateRoomType(int id, String roomType)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("room_type", roomType)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("room_type", roomType)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updatePrice(int id, float price)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("price", price)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("price", price)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateMinimumNights(int id, int minimumNights)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("minimum_nights", minimumNights)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("minimum_nights", minimumNights)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateLastReview(int id, int year, int month, int day)
     {
         String date = year + "-" + month + "-" + day;
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("last_review", date)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("last_review", date)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateReviewsPerMonth(int id, int reviewsPerMonth)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("reviews_per_month", reviewsPerMonth)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("reviews_per_month", reviewsPerMonth)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateCalculatedHostListingsCount(int id, int calculatedHostListingsCount)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("calculated_host_listings_count", calculatedHostListingsCount)));
+        if(read(id)!=null)
+             collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("calculated_host_listings_count", calculatedHostListingsCount)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
 
     public void updateAvailability365(int id, int availability365)
     {
-        collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("availability_365", availability365)));
+        if(read(id)!=null)
+            collection.updateOne(Filters.eq("id", id), new Document("$set", new Document("availability_365", availability365)));
+        else
+            throw new IllegalArgumentException("Document does not exist");
     }
     //endregion
 
