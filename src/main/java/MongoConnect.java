@@ -28,6 +28,17 @@ public class MongoConnect
         return collection;
     }
 
+    public void mongoExport (List<List<String>> records){
+        Document document = new Document();
+        for (int k = 0; k <records.size() ; k++) {
+            for (int i = 0; i < records.get(0).size() ; i++) {
+                for (int j = 0; j < records.get(0).size() ; j++) document.append(records.get(0).get(i), records.get(j).get(i));
+            }
+            collection.insertOne(document);
+            document.clear();
+        }
+
+    }
     public void create(int id)
     {
         Document document = new Document();
