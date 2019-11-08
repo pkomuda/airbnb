@@ -24,7 +24,6 @@ import org.bson.json.JsonWriterSettings;
 
 public class Main {
     public static void main(String[] args) {
-        //MongoInit mongoInit = new MongoInit();
         List<List<String>> records = new ArrayList<List<String>>();
         try (CSVReader csvReader = new CSVReader(new FileReader("AB_NYC_2019.csv"));) {
             String[] values = null;
