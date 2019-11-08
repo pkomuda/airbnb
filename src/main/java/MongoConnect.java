@@ -10,35 +10,33 @@ import org.bson.json.JsonWriterSettings;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MongoConnect
-{
+public class MongoConnect {
     private MongoCollection<Document> collection;
     private JsonWriterSettings writerSettings;
 
-    public MongoConnect(String databaseName, String collectionName)
-    {
+    public MongoConnect(String databaseName, String collectionName) {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase(databaseName);
         collection = database.getCollection(collectionName);
         writerSettings = new JsonWriterSettings(JsonMode.SHELL, true);
     }
 
-    public MongoCollection<Document> getCollection()
-    {
+    public MongoCollection<Document> getCollection() {
         return collection;
     }
 
-    public void mongoExport (List<List<String>> records){
+    public void mongoExport(List<List<String>> records) {
         Document document = new Document();
-        for (int k = 0; k <records.size() ; k++) {
-            for (int i = 0; i < records.get(0).size() ; i++) {
-                for (int j = 0; j < records.get(0).size() ; j++) document.append(records.get(0).get(i), records.get(j).get(i));
-            }
-            collection.insertOne(document);
-            document.clear();
-        }
+        for (int i = 1; i < records.get(0).size(); i++) {
+            for (int j = 0; j < records.get(0).size(); j++)
+                document.append(records.get(0).get(j), records.get(i).get(j));
 
+        collection.insertOne(document);
+        document.clear();
+        }
     }
+
+
     public void create(int id)
     {
         Document document = new Document();
