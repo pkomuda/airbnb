@@ -6,7 +6,13 @@ import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,17 +34,6 @@ public class MongoConnect
         return collection;
     }
 
-    public void mongoExport (List<List<String>> records){
-        Document document = new Document();
-        for (int k = 0; k <records.size() ; k++) {
-            for (int i = 0; i < records.get(0).size() ; i++) {
-                for (int j = 0; j < records.get(0).size() ; j++) document.append(records.get(0).get(i), records.get(j).get(i));
-            }
-            collection.insertOne(document);
-            document.clear();
-        }
-
-    }
     public void create(int id)
     {
         Document document = new Document();
@@ -47,6 +42,40 @@ public class MongoConnect
             collection.insertOne(document);
         else
             throw new IllegalArgumentException("Document with id: " + id + " already exists.");
+    }
+
+    public void createAll(String path)
+    {
+        List<Document> documents = new ArrayList<>();
+        try
+        {
+            JSONObject jsonObject = new JSONObject(readFile(path));
+            JSONArray jsonArray = jsonObject.getJSONArray("bookings");
+            for (int i = 0; i < jsonArray.length(); i++)
+                documents.add(Document.parse(jsonArray.getString(i)));
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        collection.insertMany(documents);
+    }
+
+    private String readFile(String path)
+    {
+        StringBuilder text = new StringBuilder();
+        try
+        {
+            String line;
+            BufferedReader r = new BufferedReader(new FileReader(path));
+            while ((line = r.readLine()) != null)
+                text.append(line);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return text.toString();
     }
 
     private Document read(int id)
